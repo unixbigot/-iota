@@ -22,7 +22,7 @@ end
 -- traffic_simple_start - register to receive changes of status
 function traffic_simple_start()
 	print("traffic: start")
-	mqtt_register("projects/"..(config.traffic_project or "+").."/status", 0, traffic_simple_receive)
+	mqtt_subscribe("projects/"..(config.traffic_project or "+").."/status", 0, traffic_simple_receive)
 end
 
 print("traffic: done")

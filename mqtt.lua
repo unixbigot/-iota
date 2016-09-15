@@ -30,7 +30,7 @@ function mqtt_on_connect(client)
 	mqtt_online = true
 
 	-- Set up a heartbeat monitor that will reboot if connection is lost and auto-recovery fails
-	mqtt_register("system/time", 0, mqtt_on_heartbeat)
+	mqtt_subscribe("system/time", 0, mqtt_on_heartbeat)
 	mqtt_on_heartbeat()
 
 	-- Publish a message indicating this device is online,
@@ -88,14 +88,20 @@ function mqtt_on_message(conn, topic, data)
 	end
 end
 
--- mqtt_register - subscribe to a topic and register a
+-- mqtt_subscribe - subscribe to a topic and register a
 -- callback function to which messages are routed
-function mqtt_register(topic, qos, callback)
+function mqtt_subsribe(topic, qos, callback)
 	print("mqtt: register subscription for topic "..topic)
 	-- Save the callback for topic in the dispatch table
 	mqtt_subscriptions[topic]=callback
 	-- Subscribe to the topic
 	mqtt_client:subscribe(topic, qos)
+end
+
+--mqtt_publish - publish a message on a topic, and invoke a callback (optional) when complete
+function mqtt_publish(topic, message, qos, retain, callback)
+	print("mqtt: publish message on topic "..topic.." => "..message)
+	return mqtt_client:publish(topic, message, qos, retain, callback)
 end
 
 -- mqtt_setup - create an MQTT client and set up event handlers
