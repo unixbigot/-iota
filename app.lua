@@ -22,7 +22,7 @@ dofile("config.lua")
 -- Set up IO pins
 dofile("iosetup.lua");
 
--- event-ready - this is called when the iota core is ready to start the application
+-- event-ready - this is called when the IoT core is ready to pass control to the application
 function event_ready()
 	local app = config.application_name
 	if (app) then
