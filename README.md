@@ -1,13 +1,15 @@
-# Manfred - a rapid framework for Internet of Things build on the NodeMCU platform
+# Manfred - a simple framework for Internet of Things built on the NodeMCU platform
 
 Manfred exists to provide a common platform for IoT devices that brings the
-three most important characteristics
+three most important characteristics missing from many IoT devices.
 
    * Interoperability - standard protocols for cooperating with cloud services
    * Security - Confidentiality and Authentication built in
    * Maintainability - ability to manage, control and upgrade devices in the field
    
 ## Basic Concept
+
+NodeMCU is a Lua programming environment for the ESP8266 family of WiFi-enabled microcontrollers.
 
 This framework consists of a number of standard files which you must download to the
 NodeMCU device.   A configuration file nominates the user application code to which control
@@ -22,6 +24,7 @@ The framework provides
     * Support for "Neopixel" addressable-LEDs using the WS8212 chip
     * Support for pushing configuration to devices over MQTT (forthcoming)
     * Support for upgrading the framework and the application over MQTT (forthcoming)
+    * Support for serverless computing with AWS IoT platform (forthcoming)
     
 ## Getting started
 
@@ -29,11 +32,19 @@ The framework provides
    * Install a file named "config.json" which defines a JSON object
       * field application_name names the LUA file which will be loaded when the framework is ready
    * Install a file named "credentials.json" with your WiFi and MQTT credentials
-   * See the projects in the examples/ subdirectory for more information
+   * See the sample applications in the examples/ subdirectory for more information
+   * 
+
+## Advice on using Manfred
+
+   * The design presumes your devices are probably on a firewalled WiFi network, and that they can connect out to the internet, but cannot be connected to
+   * You are expected to use an MQTT message broker in the cloud to connect your devices.  You can host one on Amazon EC2, or use the free test server from mosquitto.org 
 
 ## Using MQTT
 
-   * To subscribe, call the function mqtt_register(topic, qos, callback) to
+MQTT is a lightweight publish-subscribe messaging system.
+
+   * To subscribe to a topic, call the function mqtt_register(topic, qos, callback) to
      subscribe to a topic, for which the callback will be invoked
    * To publish, call the function mqtt_publish which is a wrapper around the standard NodeMCU
      publish method
