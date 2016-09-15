@@ -17,23 +17,25 @@ is passed once the framework is ready.
 
 The framework provides
 
-    * WiFi setup, network selection and event handling
-    * Basic I/O support for the built-in LED and Button on the NodeMCU
-    * MQTT client with a simple multiple-topic dispatcher
-    * Slack webhook client
-    * Support for "Neopixel" addressable-LEDs using the WS8212 chip
-    * Support for pushing configuration to devices over MQTT (forthcoming)
-    * Support for upgrading the framework and the application over MQTT (forthcoming)
-    * Support for serverless computing with AWS IoT platform (forthcoming)
+* WiFi setup, network selection and event handling
+* Basic I/O support for the built-in LED and Button on the NodeMCU
+* MQTT client with a simple multiple-topic dispatcher
+* Slack webhook client
+* Support for "Neopixel" addressable-LEDs using the WS8212 chip
+* Support for pushing configuration to devices over MQTT (forthcoming)
+* Support for upgrading the framework and the application over MQTT (forthcoming)
+* Support for serverless computing with AWS IoT platform (forthcoming)
     
 ## Getting started
 
-   * Install the core files
-   * Install a file named "config.json" which defines a JSON object
-      * field application_name names the LUA file which will be loaded when the framework is ready
-   * Install a file named "credentials.json" with your WiFi and MQTT credentials
-   * See the sample applications in the examples/ subdirectory for more information
-   * 
+* Download all the core Lua files to your NodeMCU
+* Download a file named "config.json" which defines a JSON object defining configuration
+  * the field `application_name` names the LUA file which will be loaded when the framework is ready
+* Download a file named "credentials.json" with your WiFi and MQTT credentials
+* Download your application code
+  * If your `application_name` is "foo" then name your code "foo.lua"
+  * See the sample applications in the examples/ subdirectory for more information
+ 
 
 ## Advice on using Manfred
 
