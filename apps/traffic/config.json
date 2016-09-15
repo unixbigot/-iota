@@ -1,0 +1,6 @@
+{
+  "application_name": "traffic_simple",
+  "pin_hello": 0,
+  "pin_ws2812": 4,
+  "traffic_project": "icarus"
+}
