@@ -90,7 +90,7 @@ end
 
 -- mqtt_subscribe - subscribe to a topic and register a
 -- callback function to which messages are routed
-function mqtt_subsribe(topic, qos, callback)
+function mqtt_subscribe(topic, qos, callback)
 	print("mqtt: register subscription for topic "..topic)
 	-- Save the callback for topic in the dispatch table
 	mqtt_subscriptions[topic]=callback
@@ -101,7 +101,13 @@ end
 --mqtt_publish - publish a message on a topic, and invoke a callback (optional) when complete
 function mqtt_publish(topic, message, qos, retain, callback)
 	print("mqtt: publish message on topic "..topic.." => "..message)
-	return mqtt_client:publish(topic, message, qos, retain, callback)
+	return mqtt_client:publish(
+		topic,
+		message,
+		qos or 0,
+		retain or 0,
+		callback or function() print("mqtt: publish complete") end
+	)
 end
 
 -- mqtt_setup - create an MQTT client and set up event handlers
