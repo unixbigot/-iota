@@ -65,20 +65,31 @@ wifi.sta.eventMonStart()
 --
 function list_ap(t) -- (SSID : Authmode, RSSI, BSSID, Channel)
 	print("\n"..string.format("%32s","SSID").."\tBSSID\t\t\t\t	RSSI\t\tAUTHMODE\tCHANNEL")
+	local join = nil
+
+	-- Loop over all the networks found and print their identity
+	-- If we see one that we like, save it and attempt to join
 	for ssid,v in pairs(t) do
 		local authmode, rssi, bssid, channel = string.match(v, "([^,]+),([^,]+),([^,]+),([^,]+)")
 		print(string.format("%32s",ssid).."\t"..
 				  bssid.."\t	"..rssi.."\t\t"..authmode.."\t\t\t"..channel)
-		if not joined_ap and config.wifi_passwords[ssid] then
-			print("wifi: joining "..ssid)
-			joined_ap=ssid
-			wifi.sta.config(ssid, config.wifi_passwords[ssid]);
-			wifi.sta.connect()
+		if not joined_ap and not join and config.wifi_passwords[ssid] then
+			-- Save this network to try joining it after we exit this loop
+			join=ssid
 		end
 	end
+
 	if not joined_ap then
-		print "wifi: No networks found, trying again in 5 seconds"
-		tmr.alarm(1, 5000, tmr.ALARM_SINGLE, seek_ap)
+		if join then
+			-- We founds a netwok above that we like.  Join it.
+			print("wifi: joining "..join)
+			wifi.sta.config(join, config.wifi_passwords[join]);
+			wifi.sta.connect()
+		else
+			-- No networks yet.  Wait and retry.
+			print "wifi: No networks found, trying again in 5 seconds"
+			tmr.alarm(1, 5000, tmr.ALARM_SINGLE, seek_ap)
+		end
 	end
 end
 

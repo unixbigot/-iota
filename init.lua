@@ -23,5 +23,7 @@ uart.setup(0, 115200, 8, uart.PARITY_NONE, uart.STOPBITS_1, 1)
 -- Second, wait a short time and load the application program.
 -- You can type "tmr.stop(0)" during the wait to cancel application startup.
 --
-print("\n\nINIT: Starting app in 5 sec.  Type tmr.stop(0) to abort.\n\n")
-tmr.alarm(0, 5000, tmr.ALARM_SINGLE, function() print("INIT: loading app"); dofile("app.lua") end)
+print("\n\n")
+print("Manfred - IoT made easy.  https://github.com/unixbigot/manfred\n")
+print("Starting app in 5 seconds.  Type tmr.stop(0) to abort.\n\n")
+tmr.alarm(0, 5000, tmr.ALARM_SINGLE, function() print("\ninit: loading app"); dofile("app.lua") end)

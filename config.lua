@@ -14,13 +14,13 @@ config = {
 -- config_update - Given a JSON string, parse it and merge into current config
 function config_update(json)
 	local new_cfg = cjson.decode(json)
-	for k,v in pairs(cfg) do config[k]=v end
+	for k,v in pairs(new_cfg) do config[k]=v end
 	return true
 end
 
 -- Read a file containing JSON (if present) and merge it into current config
 function read_config(filename)
-	if not file.exists(filename) then returen false end
+	if not file.exists(filename) then return false end
 	print("config: reading "..filename);
 	local buf = '';
 	file.open(filename , "r")
