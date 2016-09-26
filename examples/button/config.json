@@ -1,0 +1,9 @@
+{
+    "application_name": "button",
+    "pin_alarm": 1,
+    "button_team": "icarus",
+    "button_message": "It's time for a team meeting!",
+    "button_acknowledge": "Meeting ACK!",
+    "slack_user": "alice",
+    "slack_channel": "#demo"
+}
