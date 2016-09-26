@@ -47,7 +47,7 @@ function event_wifi_ready(ip)
 	flash_hello(500)
 
 	-- Load the slack library if slack is configured
-	if config.slack_webhook_url then dofile("slack.lua") end
+	if config.slack_webhook_url or config.slack_mqtt_topic then dofile("slack.lua") end
 
 	-- Load the MQTT library if MQTT is configure
 	if config.mqtt_server then
