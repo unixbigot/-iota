@@ -12,8 +12,8 @@ traffic_colours = { -- GRB
 	green = string.char(255,0,0,0,0,0,0,0,0)
 }
 
--- set_traffic_colour - set the colour (and optionally state) of the LEDs
-function set_traffic_colour(colour, state)
+-- traffic_set_colour - set the colour (and optionally state) of the LEDs
+function traffic_set_colour(colour, state)
 	traffic_colour = colour
 	traffic_state = state or 'on'
 end
@@ -24,14 +24,14 @@ function traffic_receive(conn, topic, data)
 
 	-- Interpret either colour names or status names as colours, and update the settings
 	if data=="red" or data=="danger" then
-		set_traffic_colour('red')
+		traffic_set_colour('red')
 	elseif data=="amber" or data == "yellow" or data=="warning" then
-		set_traffic_colour('amber')
+		traffic_set_colour('amber')
 	elseif data=="green" or data=="good" then
-		set_traffic_colour('green')
+		traffic_set_colour('green')
 	else
 		print("traffic: Unrecognized status: "..data)
-		set_traffic_colour('amber', 'flash')
+		traffic_set_colour('amber', 'flash')
 	end
 end
 
@@ -61,7 +61,7 @@ end
 -- current status as soon as it subscribes.
 function traffic_start()
 	print("traffic: start")
-	set_traffic_colour('amber', 'flash')
+	traffic_set_colour('amber', 'flash')
 	mqtt_register("projects/"..(config.traffic_project or "+").."/status", 0, traffic_receive)
 	tmr.alarm(3, 1000, tmr.ALARM_AUTO, traffic_alarm)
 end
