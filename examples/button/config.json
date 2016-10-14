@@ -1,7 +1,8 @@
 {
     "application_name": "button",
     "pin_alarm": 1,
-    "button_team": "icarus",
+    "pin_button": 2,
+    "button_team": "excalibur",
     "button_message": "It's time for a team meeting!",
     "button_acknowledge": "Meeting ACK!",
     "slack_user": "alice",

@@ -13,8 +13,8 @@ function button_event(level)
 	if (button_state == 'idle') then
 		-- initiate a meeting
 		button_initiate()
-	elseif (button_state == 'alarm') then
-		-- We are called to a meeting, acknowledge
+	else
+	    -- We are called to a meeting, acknowledge
 		button_acknowledge()
 	end
 end
@@ -23,20 +23,24 @@ function button_initiate()
 	print("button: initiate")
 	slack(config.button_message)
     mqtt_publish(button_topic, "1")
-	button_alarm_start()
+	button_alarm_start('called')
 end
 
 function button_acknowledge()
 	print("button: ack")
 	slack(config.button_acknowledge)
 	button_alarm_stop()
+    if button_state == 'called' then
+        mqtt_publish(button_topic, "0")
+    end
+    button_state = 'idle'
 end
 
 -- button_receive - called when an MQTT message arrives on a topic to which we subscribe
 function button_receive(conn, topic, data)
     print("button: receive "..data)
     if (data == "1") then
-		button_alarm_start()
+		button_alarm_start('invited')
 	else
 		button_alarm_stop()
 	end
@@ -54,11 +58,11 @@ function button_alarm_off()
 	button_alarm = false
 end
 
-function button_alarm_start()
-    print "button: alarm_start"
-	button_state = 'alarm'
+function button_alarm_start(reason)
+    print("button: alarm_start " .. reason)
 	button_alarm_on()
 	tmr.alarm(3, 500, tmr.ALARM_AUTO, button_alarm_flash)
+    button_state = reason or 'invited'
 end
 
 function button_alarm_stop()
