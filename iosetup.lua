@@ -63,19 +63,20 @@ end
 button_registry = {}
 
 function button_dispatch(pin, level)
-    print("iosetup: button_dispatch pin="..pin.." level="..level)
+	print("iosetup: button_dispatch pin="..pin.." level="..level)
 	-- Get the control record for this pin
 	button_info = button_registry[pin];
 	local debounce_delay = (config.button_debounce or 100) * 1000
 
 	-- Ignore duplicate events in rapid succession, mechaninical switches can "bounce" for a few milliseconds
 	if (button_info.last_event and (tmr.now() - button_info.last_event) < debounce_delay) then return end
+	button_info.last_event = tmr.now();
 
 	button_info.callback(level)
 end
 
 function register_button(pin, trigger, callback)
-    print("iosetup: register_button pin="..pin.." trigger="..trigger)
+	print("iosetup: register_button pin="..pin.." trigger="..trigger)
 	if callback then
 		-- Set up delivery of button events
 		button_registry[pin] = {["callback"] = callback}
