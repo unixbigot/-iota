@@ -62,7 +62,7 @@ end
 function traffic_start()
 	print("traffic: start")
 	traffic_set_colour('amber', 'flash')
-	mqtt_register("projects/"..(config.traffic_project or "+").."/status", 0, traffic_receive)
+	mqtt_subscribe("projects/"..(config.traffic_project or "+").."/status", 0, traffic_receive)
 	tmr.alarm(3, 1000, tmr.ALARM_AUTO, traffic_alarm)
 end
 
